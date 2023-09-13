@@ -21,6 +21,7 @@ ALLOWED_HOSTS = []
 
 LOCAL_APPS = [
     'accounts.apps.AccountsConfig',
+    'blog.apps.BlogConfig',
 ]
 
 
