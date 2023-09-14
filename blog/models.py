@@ -1,10 +1,11 @@
 import os
 import uuid
 
-from accounts.models import User
 from django.db import models
 from django.utils.html import format_html
 from django.utils.translation import gettext as _
+
+from accounts.models import User
 
 
 def get_file_path(instance, filename):

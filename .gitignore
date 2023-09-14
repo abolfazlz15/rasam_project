@@ -3,6 +3,7 @@
 
 # my ignore
 theme/
+media/
 ### Django ###
 *.log
 *.pot
