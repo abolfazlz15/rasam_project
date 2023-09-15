@@ -2,7 +2,9 @@ import os
 import uuid
 
 from django.db import models
+from django.urls import reverse
 from django.utils.html import format_html
+from django.utils.text import slugify
 from django.utils.translation import gettext as _
 
 from accounts.models import User
@@ -32,6 +34,8 @@ class Category(models.Model):
 
 class Article(models.Model):
     title = models.CharField(max_length=255, verbose_name=_('عنوان'))
+    slug = models.SlugField(unique=True, null=True, blank=True, allow_unicode=True)
+
     text = models.TextField(verbose_name=_('توضیحات'))
     image = models.ImageField(blank=True, null=True, upload_to=get_file_path, verbose_name=_('تصویر'))
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='article', verbose_name=_('نویسنده'))
@@ -41,7 +45,12 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاریخ ایجاد'))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('اخرین بروزرسانی'))
 
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.slug = slugify(self.title, allow_unicode=True)
+        super(Article, self).save()
 
+    def get_absolute_url(self):
+        return reverse('blog:article_detail', kwargs={'slug': self.slug})
 
     def __str__(self):
         return f'{self.title} - {self.text[:20]}'
