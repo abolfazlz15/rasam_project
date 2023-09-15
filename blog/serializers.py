@@ -1,6 +1,18 @@
 from rest_framework import serializers
 
-from blog.models import Article
+from blog.models import Article, Tag, Category
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('id', 'title')
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('id', 'title')
 
 
 class ArticleListSrializer(serializers.ModelSerializer):
@@ -15,11 +27,11 @@ class ArticleListSrializer(serializers.ModelSerializer):
 
 
 class ArticleDetailSrializer(serializers.ModelSerializer):
-    category = serializers.SlugRelatedField(read_only=True, slug_field='title')
-    tag = serializers.SlugRelatedField(read_only=True, slug_field='title')
     author = serializers.SlugRelatedField(
         read_only=True, slug_field='full_name')
     id = serializers.IntegerField(read_only=True)
+    tag = serializers.SerializerMethodField()
+    category = serializers.SerializerMethodField()
 
     class Meta:
         model = Article
@@ -33,5 +45,10 @@ class ArticleDetailSrializer(serializers.ModelSerializer):
             return request.build_absolute_uri(image_url)
         return None
 
+    def get_tag(self, obj):
+        serializer = TagSerializer(instance=obj.tag)
+        return serializer.data
 
- 
+    def get_category(self, obj):
+        serializer = CategorySerializer(instance=obj.category)
+        return serializer.data

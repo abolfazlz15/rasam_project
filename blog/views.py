@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView
 from blog.models import Article
 from blog import serializers
@@ -16,3 +16,4 @@ class ArticleDetailView(APIView):
         queryset = get_object_or_404(Article, slug=slug)
         serializer_class = serializers.ArticleDetailSrializer(instance=queryset, context={'request': request})
         return Response(serializer_class.data)
+        
