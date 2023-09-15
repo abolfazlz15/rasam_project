@@ -4,11 +4,13 @@ from rest_framework.views import APIView
 from blog.models import Article
 from blog import serializers
 from rest_framework.response import Response
+from blog.pagination import CustomPagination
 
 class ArticleListView(ListAPIView):
     queryset = Article.objects.filter(status=True).order_by('-updated_at')
     serializer_class =  serializers.ArticleListSrializer
     search_fields = ['title', 'text']
+    pagination_class = CustomPagination
 
 
 class ArticleDetailView(APIView):
