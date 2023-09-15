@@ -11,4 +11,18 @@ class ArticleListSrializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ('id', 'title', 'image', 'author', 'category')
+        fields = ('id', 'slug', 'title', 'image', 'author', 'category')
+
+
+class ArticleDetailSrializer(serializers.ModelSerializer):
+    category = serializers.SlugRelatedField(read_only=True, slug_field='title')
+    tag = serializers.SlugRelatedField(read_only=True, slug_field='title')
+    author = serializers.SlugRelatedField(
+        read_only=True, slug_field='full_name')
+    id = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Article
+        exclude = ('status', 'updated_at')
+
+ 
