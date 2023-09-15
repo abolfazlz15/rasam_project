@@ -14,5 +14,5 @@ class ArticleListView(ListAPIView):
 class ArticleDetailView(APIView):
     def get(self, request, slug):
         queryset = get_object_or_404(Article, slug=slug)
-        serializer_class = serializers.ArticleDetailSrializer(instance=queryset)
+        serializer_class = serializers.ArticleDetailSrializer(instance=queryset, context={'request': request})
         return Response(serializer_class.data)

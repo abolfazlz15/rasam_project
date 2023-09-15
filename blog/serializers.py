@@ -23,6 +23,15 @@ class ArticleDetailSrializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        exclude = ('status', 'updated_at')
+        exclude = ('status', 'updated_at', 'slug')
+
+    def get_cover(self, obj):
+        request = self.context.get('request')
+        # add base URL for cover music
+        if obj.image:
+            image_url = obj.image.url
+            return request.build_absolute_uri(image_url)
+        return None
+
 
  

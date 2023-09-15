@@ -35,7 +35,6 @@ class Category(models.Model):
 class Article(models.Model):
     title = models.CharField(max_length=255, verbose_name=_('عنوان'))
     slug = models.SlugField(unique=True, null=True, blank=True, allow_unicode=True)
-
     text = models.TextField(verbose_name=_('توضیحات'))
     image = models.ImageField(blank=True, null=True, upload_to=get_file_path, verbose_name=_('تصویر'))
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='article', verbose_name=_('نویسنده'))
