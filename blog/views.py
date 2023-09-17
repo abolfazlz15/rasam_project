@@ -28,3 +28,9 @@ class CategoryDetailView(APIView):
         serializer_class =  serializers.ArticleListSrializer(instance=queryset, context={'request': request}, many=True)
         return Response(serializer_class.data)
  
+
+class TagDetailView(APIView):
+    def get(self, request, pk):
+        queryset = Article.objects.filter(status=True).filter(tag__id=pk).order_by('-updated_at')
+        serializer_class =  serializers.ArticleListSrializer(instance=queryset, context={'request': request}, many=True)
+        return Response(serializer_class.data)
