@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from blog.models import Article, Tag, Category
+from utils.date_conversion.utils import jajali_converter
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -32,7 +33,7 @@ class ArticleDetailSrializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     tag = serializers.SerializerMethodField()
     category = serializers.SerializerMethodField()
-
+    created_at = serializers.SerializerMethodField()
     class Meta:
         model = Article
         exclude = ('status', 'updated_at', 'slug')
@@ -52,3 +53,8 @@ class ArticleDetailSrializer(serializers.ModelSerializer):
     def get_category(self, obj):
         serializer = CategorySerializer(instance=obj.category)
         return serializer.data
+
+    def get_created_at(self, obj):
+        test = obj.created_at
+        return jajali_converter(test)
+        

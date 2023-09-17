@@ -20,7 +20,7 @@ class ArticleDetailView(APIView):
         queryset = get_object_or_404(Article, slug=slug)
         serializer_class = serializers.ArticleDetailSrializer(instance=queryset, context={'request': request})
         return Response(serializer_class.data)
-        
+
 
 class CategoryDetailView(APIView):
     def get(self, request, pk):

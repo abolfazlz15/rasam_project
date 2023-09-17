@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
+from utils.date_conversion.utils import jajali_converter
 
 from accounts.models import User
 
@@ -62,3 +63,7 @@ class Article(models.Model):
         else:
             return format_html('no image')
     showImage.short_description = 'image'
+
+    def get_jalali_date(self):
+        return jajali_converter(self.created_at)
+    get_jalali_date.short_description = 'تاریخ عضویت'
