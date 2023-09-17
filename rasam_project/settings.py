@@ -23,6 +23,7 @@ ALLOWED_HOSTS = []
 LOCAL_APPS = [
     'accounts.apps.AccountsConfig',
     'blog.apps.BlogConfig',
+    'pages.apps.PagesConfig',
 ]
     
 THIRD_PARTY_APPS = [
