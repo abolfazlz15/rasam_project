@@ -22,15 +22,19 @@ class ArticleDetailView(APIView):
         return Response(serializer_class.data)
 
 
-class CategoryDetailView(APIView):
-    def get(self, request, pk):
-        queryset = Article.objects.filter(status=True).filter(category__id=pk).order_by('-updated_at')
-        serializer_class =  serializers.ArticleListSrializer(instance=queryset, context={'request': request}, many=True)
-        return Response(serializer_class.data)
- 
+class CategoryDetailView(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = serializers.ArticleListSrializer
 
-class TagDetailView(APIView):
-    def get(self, request, pk):
-        queryset = Article.objects.filter(status=True).filter(tag__id=pk).order_by('-updated_at')
-        serializer_class =  serializers.ArticleListSrializer(instance=queryset, context={'request': request}, many=True)
-        return Response(serializer_class.data)
+    def get_queryset(self):
+        queryset = Article.objects.filter(status=True).filter(category__id=self.kwargs['pk']).order_by('-updated_at')
+        return queryset
+
+
+class TagDetailView(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = serializers.ArticleListSrializer
+    
+    def get_queryset(self):
+        queryset = Article.objects.filter(status=True).filter(tag__id=self.kwargs['pk']).order_by('-updated_at')
+        return queryset
