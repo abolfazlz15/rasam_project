@@ -57,4 +57,3 @@ class ArticleDetailSrializer(serializers.ModelSerializer):
     def get_created_at(self, obj):
         date = obj.created_at
         return jajali_converter(date)
-        
