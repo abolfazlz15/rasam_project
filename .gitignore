@@ -4,6 +4,7 @@
 # my ignore
 theme/
 media/
+static/
 ### Django ###
 *.log
 *.pot
@@ -235,7 +236,7 @@ cython_debug/
 
 # SageMath parsed files
 
-# Environments  
+# Environments
 
 # Spyder project settings
 
