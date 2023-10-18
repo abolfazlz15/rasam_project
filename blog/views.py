@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from blog import serializers
-from blog.models import Article
+from blog.models import Article, Category
 from blog.pagination import CustomPagination
 
 
@@ -30,6 +30,10 @@ class CategoryDetailView(ListAPIView):
         queryset = Article.objects.filter(status=True).filter(category__id=self.kwargs['pk']).order_by('-updated_at')
         return queryset
 
+
+class CategoryListView(ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = serializers.CategoryListSrializer   
 
 class TagDetailView(ListAPIView):
     pagination_class = CustomPagination
